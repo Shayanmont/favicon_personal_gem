@@ -1,7 +1,9 @@
-module FaviconPersonal
+module Personal
+
+	class Favicon
 
 		# Declaring initialize method
-		def initialize(url)
+		def self.get(url)
 			@main_url = url
 		end
 
@@ -13,7 +15,9 @@ module FaviconPersonal
 
 		# Get the page content from a URL
 
-		def open(url)
+		private 
+
+		def self.open(url)
 
 			uri = URI.parse(url)
 			if uri.scheme == "https"
@@ -34,7 +38,9 @@ module FaviconPersonal
 		# Send a GET request to the target and returns the HTTP response
 		# as a Net::HTTPResponse object
 
-		def open_img_url(image_url)
+		private
+
+		def self.open_img_url(image_url)
 			image_url_https = URI.parse(image_url)
 			if image_url_https.scheme == "https"
 				http = Net::HTTP.new(image_url_https.host, image_url_https.port)
@@ -51,7 +57,9 @@ module FaviconPersonal
 
 		# Get the response code for the favicon url
 
-		def response_code(img_url_respon)
+		private
+
+		def self.response_code(img_url_respon)
 			code  = Integer(img_url_respon.code)
 			code
 		end
@@ -59,7 +67,9 @@ module FaviconPersonal
 		# check if it is possible to retreive favicon 
 		# by appending favicon.ico and then retrieving
 
-		def check_favicon
+		private
+
+		def self.check_favicon
 		
 			begin 
 
@@ -85,7 +95,9 @@ module FaviconPersonal
 
 		# parsing and returning the content of index 
 
-		def parse_html
+		private
+
+		def self.parse_html
 
 			page_content = open(@main_url)
 			
@@ -117,8 +129,9 @@ module FaviconPersonal
 		end
 
 		# Obtaining the favicon
+		private
 
-		def get_favicon
+		def self.get_favicon
 
 			if check_favicon == true
 				if @main_url.end_with? "/"
@@ -134,10 +147,11 @@ module FaviconPersonal
 			end
 		end
 
-		def show_favicon
+		def self.show_favicon
 			 #redirect_to get_favicon
 			 #puts get_favicon
 			 get_favicon
 		end
+	end
 
 end
